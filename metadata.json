@@ -1,0 +1,6 @@
+{
+  "name": "Methodist Episcopal Church in Southern Asia (MECSA) - Bulandshahr",
+  "description": "Official website of the Methodist Episcopal Church in Southern Asia (MECSA), Bulandshahr, Uttar Pradesh, India. Heritage since 1898, worship, prayer, and community.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
