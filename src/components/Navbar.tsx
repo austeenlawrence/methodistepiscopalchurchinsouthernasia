@@ -79,6 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     src="/images/mecsa-logo.png"
     alt="MECSA Church Logo"
     className="w-10 h-10 object-contain"
+    decoding="async"
   />
 </div>
 

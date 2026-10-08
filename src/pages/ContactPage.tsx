@@ -1,5 +1,5 @@
 import emailjs from '@emailjs/browser';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PageRoute } from '../types';
 import { churchData } from '../data/churchData';
 import {
@@ -34,6 +34,27 @@ export const ContactPage: React.FC<ContactPageProps> = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Progressive loading for Google Maps embed iframe
+  const [mapInView, setMapInView] = useState(false);
+  const mapRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') {
+      setMapInView(true);
+      return;
+    }
+    const el = mapRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setMapInView(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: '250px 0px' });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const validateForm = () => {
     const errs: Record<string, string> = {};
@@ -403,17 +424,24 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                   </a>
                 </div>
 
-                <div className="w-full h-52 rounded-lg overflow-hidden border border-[#E0D7C6] bg-gray-100">
-                  <iframe
-                    title="MECSA Bulandshahr Map Location"
-                    src={churchData.location.googleMapsEmbedUrl}
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen={false}
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  ></iframe>
+                <div ref={mapRef} className="w-full h-52 rounded-lg overflow-hidden border border-[#E0D7C6] bg-gray-100 flex items-center justify-center">
+                  {mapInView ? (
+                    <iframe
+                      title="MECSA Bulandshahr Map Location"
+                      src={churchData.location.googleMapsEmbedUrl}
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen={false}
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center text-gray-400 gap-1.5 p-4 text-center">
+                      <MapPin className="w-5 h-5 text-[#8C6D1F]/60" />
+                      <span className="text-xs text-gray-500 font-medium">Bulandshahr, Uttar Pradesh</span>
+                    </div>
+                  )}
                 </div>
               </div>
 

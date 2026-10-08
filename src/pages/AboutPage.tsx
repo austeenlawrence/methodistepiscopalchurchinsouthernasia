@@ -64,6 +64,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             alt="Church architecture background"
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
+            fetchPriority="high"
+            decoding="async"
           />
         </div>
 
@@ -125,6 +127,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                   alt="Historic sanctuary altar table"
                   className="w-full h-64 object-cover rounded-lg"
                   referrerPolicy="no-referrer"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="p-3 text-center">
                   <p className="font-cinzel text-xs font-bold text-[#0F1D2F]">
@@ -268,6 +272,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({
                       alt={leader.imageAlt}
                       className="w-full h-full object-cover"
                       referrerPolicy="no-referrer"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-[#0F1D2F]/80 via-transparent to-transparent"></div>
                     <div className="absolute bottom-3 left-4 right-4 text-white">
@@ -516,10 +522,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({
               <div className="md:col-span-4 text-center">
                 <div className="w-40 h-40 sm:w-48 sm:h-48 rounded-full overflow-hidden border-4 border-[#C59B27] mx-auto shadow-lg bg-gray-700">
                   <img
-                    src={churchData.about?.bishopsMessage?.photoUrl || "/images/papa 1.png"}
+                    src={churchData.about?.bishopsMessage?.photoUrl || "/images/papa 1.webp"}
                     alt={churchData.about?.bishopsMessage?.bishopName || "Bishop Khadim M. Lawrence"}
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <h4 className="font-serif-heading text-lg font-bold text-white mt-4">

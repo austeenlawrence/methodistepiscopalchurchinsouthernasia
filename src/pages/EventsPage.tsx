@@ -67,6 +67,8 @@ export const EventsPage: React.FC<EventsPageProps> = () => {
                       alt={event.imageAlt}
                       className="w-full h-full object-contain"
                       referrerPolicy="no-referrer"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div className="absolute top-3 left-3 bg-[#0F1D2F]/90 text-[#E8C860] text-xs font-bold px-3 py-1 rounded backdrop-blur-xs border border-[#C59B27]/40 font-cinzel">
                       {event.date.split(',')[0]}

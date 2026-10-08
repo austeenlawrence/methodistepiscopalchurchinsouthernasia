@@ -126,6 +126,8 @@ export const GivePage: React.FC<GivePageProps> = () => {
     src="/images/qr.jpeg"
     alt="Official UPI QR Code"
     className="w-full h-full object-contain rounded-xl"
+    loading="lazy"
+    decoding="async"
   />
 </div>
 

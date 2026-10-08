@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PageRoute, ChurchEvent, Sermon } from '../types';
 import { churchData } from '../data/churchData';
 import { Lightbox } from '../components/Lightbox';
@@ -43,6 +43,51 @@ export const HomePage: React.FC<HomePageProps> = ({
   const [isEventModalOpen, setIsEventModalOpen] = useState(false);
   const [isSermonModalOpen, setIsSermonModalOpen] = useState(false);
 
+  // Progressive loading observers for below-the-fold heavy sections
+  const [eventsVisible, setEventsVisible] = useState(false);
+  const eventsRef = useRef<HTMLDivElement | null>(null);
+
+  const [ministriesVisible, setMinistriesVisible] = useState(false);
+  const ministriesRef = useRef<HTMLDivElement | null>(null);
+
+  const [galleryVisible, setGalleryVisible] = useState(false);
+  const galleryRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') {
+      setEventsVisible(true);
+      setMinistriesVisible(true);
+      setGalleryVisible(true);
+      return;
+    }
+
+    const createObserver = (
+      element: HTMLElement | null,
+      setter: (v: boolean) => void,
+      margin = '350px 0px'
+    ) => {
+      if (!element) return null;
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          setter(true);
+          observer.disconnect();
+        }
+      }, { rootMargin: margin });
+      observer.observe(element);
+      return observer;
+    };
+
+    const obsEvents = createObserver(eventsRef.current, setEventsVisible);
+    const obsMinistries = createObserver(ministriesRef.current, setMinistriesVisible);
+    const obsGallery = createObserver(galleryRef.current, setGalleryVisible);
+
+    return () => {
+      obsEvents?.disconnect();
+      obsMinistries?.disconnect();
+      obsGallery?.disconnect();
+    };
+  }, []);
+
   const getMinistryIcon = (iconName: string) => {
     switch (iconName) {
       case 'Sparkles':
@@ -83,6 +128,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             alt="Church sanctuary illuminated with warm natural light"
             className="w-full h-full object-cover object-center scale-105 filter brightness-50"
             referrerPolicy="no-referrer"
+            fetchPriority="high"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-linear-to-b from-[#0A1420]/80 via-[#0A1420]/60 to-[#0A1420]/95"></div>
         </div>
@@ -189,6 +236,8 @@ export const HomePage: React.FC<HomePageProps> = ({
                   alt="Interior sanctuary of church ready for divine worship"
                   className="w-full h-80 sm:h-96 object-cover rounded-xl"
                   referrerPolicy="no-referrer"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute bottom-6 left-6 right-6 bg-[#0F1D2F]/90 backdrop-blur-md p-4 rounded-lg border border-[#C59B27]/40 text-white">
                   <p className="font-cinzel text-xs font-semibold text-[#D4AF37]">
@@ -331,7 +380,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* =========================================================================
           D. UPCOMING EVENTS
           ========================================================================= */}
-      <section className="py-16 lg:py-24 bg-[#FAF8F5] border-b border-[#E8E1D5]">
+      <section ref={eventsRef} className="py-16 lg:py-24 bg-[#FAF8F5] border-b border-[#E8E1D5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -367,12 +416,18 @@ export const HomePage: React.FC<HomePageProps> = ({
               >
                 <div>
                   <div className="relative h-48 overflow-hidden bg-[#0F1D2F] flex items-center justify-center">
-                    <img
-                      src={event.image}
-                      alt={event.imageAlt}
-                      className="w-full h-full object-contain"
-                      referrerPolicy="no-referrer"
-                    />
+                    {eventsVisible ? (
+                      <img
+                        src={event.image}
+                        alt={event.imageAlt}
+                        className="w-full h-full object-contain"
+                        referrerPolicy="no-referrer"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-[#0F1D2F]" />
+                    )}
                     <div className="absolute top-3 left-3 bg-[#0F1D2F]/90 text-white text-[10px] font-bold px-2.5 py-1 rounded backdrop-blur-xs border border-[#C59B27]/40">
                       {event.date.split(',')[0]}
                     </div>
@@ -434,6 +489,8 @@ export const HomePage: React.FC<HomePageProps> = ({
                   alt="Historic church heritage in Bulandshahr"
                   className="w-full h-80 sm:h-96 object-cover rounded-xl"
                   referrerPolicy="no-referrer"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute top-6 left-6 bg-[#0F1D2F]/90 text-[#D4AF37] font-cinzel text-xs font-bold px-3 py-1.5 rounded border border-[#C59B27]/40 shadow-xs">
                   Bulandshahr Heritage Since 1898
@@ -496,7 +553,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* =========================================================================
           F. OUR MINISTRIES PREVIEW (6 Ministries)
           ========================================================================= */}
-      <section className="py-16 lg:py-24 bg-[#FAF8F5] border-b border-[#E8E1D5]">
+      <section ref={ministriesRef} className="py-16 lg:py-24 bg-[#FAF8F5] border-b border-[#E8E1D5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
@@ -519,12 +576,18 @@ export const HomePage: React.FC<HomePageProps> = ({
                 className="bg-white rounded-xl overflow-hidden border border-[#E5DDD0] shadow-xs hover:shadow-md transition-all duration-200"
               >
                 <div className="h-40 relative overflow-hidden bg-gray-100">
-                  <img
-                    src={ministry.image}
-                    alt={ministry.imageAlt}
-                    className="w-full h-full object-cover"
-                    referrerPolicy="no-referrer"
-                  />
+                  {ministriesVisible ? (
+                    <img
+                      src={ministry.image}
+                      alt={ministry.imageAlt}
+                      className="w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-[#16273C]" />
+                  )}
                   <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
                   <div className="absolute bottom-3 left-4 right-4 flex items-center gap-2 text-white">
                     <div className="w-8 h-8 rounded-full bg-[#0F1D2F]/80 border border-[#C59B27] flex items-center justify-center shrink-0">
@@ -619,6 +682,8 @@ export const HomePage: React.FC<HomePageProps> = ({
                   alt="Sermon video broadcast thumbnail"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 opacity-75"
                   referrerPolicy="no-referrer"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>
                 
@@ -681,7 +746,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* =========================================================================
           I. CHURCH GALLERY
           ========================================================================= */}
-      <section className="py-16 lg:py-24 bg-[#FAF8F5] border-b border-[#E8E1D5]">
+      <section ref={galleryRef} className="py-16 lg:py-24 bg-[#FAF8F5] border-b border-[#E8E1D5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           
           <div className="text-center max-w-2xl mx-auto space-y-3">
@@ -704,12 +769,18 @@ export const HomePage: React.FC<HomePageProps> = ({
                 onClick={() => setSelectedPhotoIndex(index)}
                 className="group relative rounded-xl overflow-hidden shadow-xs hover:shadow-lg border border-[#E5DDD0] bg-gray-100 aspect-4/3 cursor-pointer transition-all duration-200"
               >
-                <img
-                  src={photo.url}
-                  alt={photo.alt}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  referrerPolicy="no-referrer"
-                />
+                {galleryVisible ? (
+                  <img
+                    src={photo.url}
+                    alt={photo.alt}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    referrerPolicy="no-referrer"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-100" />
+                )}
                 <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-end p-4 text-white">
                   <p className="font-serif-heading text-sm font-semibold">{photo.title}</p>
                   <p className="text-[11px] text-gray-200 line-clamp-1">{photo.caption}</p>
@@ -765,38 +836,44 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* Lightbox Component */}
-      <Lightbox
-        photos={churchData.gallery}
-        currentIndex={selectedPhotoIndex}
-        onClose={() => setSelectedPhotoIndex(null)}
-        onPrev={() => {
-          if (selectedPhotoIndex !== null) {
-            setSelectedPhotoIndex((selectedPhotoIndex - 1 + churchData.gallery.length) % churchData.gallery.length);
-          }
-        }}
-        onNext={() => {
-          if (selectedPhotoIndex !== null) {
-            setSelectedPhotoIndex((selectedPhotoIndex + 1) % churchData.gallery.length);
-          }
-        }}
-      />
+      {selectedPhotoIndex !== null && (
+        <Lightbox
+          photos={churchData.gallery}
+          currentIndex={selectedPhotoIndex}
+          onClose={() => setSelectedPhotoIndex(null)}
+          onPrev={() => {
+            if (selectedPhotoIndex !== null) {
+              setSelectedPhotoIndex((selectedPhotoIndex - 1 + churchData.gallery.length) % churchData.gallery.length);
+            }
+          }}
+          onNext={() => {
+            if (selectedPhotoIndex !== null) {
+              setSelectedPhotoIndex((selectedPhotoIndex + 1) % churchData.gallery.length);
+            }
+          }}
+        />
+      )}
 
       {/* Event Details Modal */}
-      <EventModal
-        event={selectedEvent}
-        isOpen={isEventModalOpen}
-        onClose={() => {
-          setIsEventModalOpen(false);
-          setSelectedEvent(null);
-        }}
-      />
+      {isEventModalOpen && selectedEvent && (
+        <EventModal
+          event={selectedEvent}
+          isOpen={isEventModalOpen}
+          onClose={() => {
+            setIsEventModalOpen(false);
+            setSelectedEvent(null);
+          }}
+        />
+      )}
 
       {/* Sermon Modal */}
-      <SermonModal
-        sermon={churchData.latestSermon}
-        isOpen={isSermonModalOpen}
-        onClose={() => setIsSermonModalOpen(false)}
-      />
+      {isSermonModalOpen && (
+        <SermonModal
+          sermon={churchData.latestSermon}
+          isOpen={isSermonModalOpen}
+          onClose={() => setIsSermonModalOpen(false)}
+        />
+      )}
 
     </div>
   );

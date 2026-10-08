@@ -86,7 +86,7 @@ export const churchData: ChurchConfig = {
       location: "Bulandshahr Church Compound",
       shortDescription: "Extending Christ's compassion to local families through distribution of essential seasonal items, warm garments, and nutritional support.",
       fullDescription: "Organized by our Outreach and Women's Ministries, this annual initiative brings practical warmth and Christian love to underprivileged neighbors across Bulandshahr. Volunteers and church families gather to assemble and distribute relief packages.",
-      image: "/images/christmas.png",
+      image: "/images/christmas.webp",
       imageAlt: "Community care and volunteer fellowship",
       isPlaceholderDate: true,
     },
@@ -98,7 +98,7 @@ export const churchData: ChurchConfig = {
       location: "MECSA , Bulandshahr",
       shortDescription: "Empowering the next generation with biblical grounding, spiritual leadership principles, and deep fellowship.",
       fullDescription: "A three-day conference bringing together young men and women for in-depth Bible study, workshops on servant leadership in modern society, vocal worship sessions, and mentoring from senior pastors.",
-      image: "/images/new year.png",
+      image: "/images/new year.webp",
       imageAlt: "Youth gathering in discussion and fellowship",
       isPlaceholderDate: true,
     },
@@ -110,7 +110,7 @@ export const churchData: ChurchConfig = {
       location: "Main Sanctuary, Bulandshahr",
       shortDescription: "A solemn evening of repentance, scriptural meditation on Christ's Passion, and united intercessory prayer.",
       fullDescription: "An evening set apart during the holy season of Lent for collective repentance, reflection upon the Cross of Christ, and intercession for regional peace, our nation, families, and those in distress.",
-      image: "/images/good friday.png",
+      image: "/images/good friday.webp",
       imageAlt: "Candlelit prayer sanctuary",
       isPlaceholderDate: true,
     }
@@ -162,7 +162,7 @@ export const churchData: ChurchConfig = {
       name: "Choir",
       shortDescription: "Enriching our divine services with inspiring sacred choral music, classic hymns of the faith, and uplifting vocal praise.",
       iconName: "Music",
-      image: "/images/choir.jpeg",
+      image: "/images/choir.webp",
       imageAlt: "Choir vocalists singing sacred choral music"
     }
   ],
@@ -173,7 +173,7 @@ export const churchData: ChurchConfig = {
       name: "Bishop Khadim M. Lawrence",
       title: "Bishop, Methodist Episcopal Church in Southern Asia",
       bio: "[Official Biography & Pastoral Profile Placeholder — Serving in episcopal leadership for MECSA, dedicated to spiritual oversight, biblical pastoral care, and upholding the heritage and ministry of the church across Southern Asia.]",
-      image: "/images/papa 1.png",
+      image: "/images/papa 1.webp",
       imageAlt: "Portrait of Bishop Khadim M. Lawrence (Placeholder photo)",
       isPlaceholderBio: true,
     },
@@ -182,7 +182,7 @@ export const churchData: ChurchConfig = {
       name: "Rev. Kavita Lawrence",
       title: "Reverend / Pastoral Ministry, MECSA",
       bio: "[Official Biography & Pastoral Profile Placeholder — Serving faithfully in ordained ministry, community engagement, family counseling, and spiritual nurture of the congregation.]",
-      image: "/images/mummy 2.png",
+      image: "/images/mummy 2.webp",
       imageAlt: "Portrait of Rev. Kavita Lawrence (Placeholder photo)",
       isPlaceholderBio: true,
     },
@@ -191,7 +191,7 @@ export const churchData: ChurchConfig = {
       name: "Br. Sanjeev Moses Davidson",
       title: "Chief Advisor",
       bio: "[Official Profile Placeholder — Providing counsel, administrative guidance, institutional stewardship, and strategic advisory support for MECSA governance and community endeavors.]",
-      image: "/images/bde papa 1.png",
+      image: "/images/bde papa 1.webp",
       imageAlt: "Portrait of Br. Sanjeev Moses Davidson, Chief Advisor (Placeholder photo)",
       isPlaceholderBio: true,
     }
@@ -225,7 +225,7 @@ export const churchData: ChurchConfig = {
       title: "Bishop, Methodist Episcopal Church in Southern Asia",
       greeting: "Grace, peace, and blessings to you in the name of our Lord and Savior Jesus Christ.",
       message: "'Dear brothers and sisters in Christ, it is with heartfelt joy that we welcome you to the Methodist Episcopal Church in Southern Asia. From our historic foundations in Bulandshahr established in 1898 to our present-day calling, our prayer is that every soul who enters our fellowship experiences the saving love of Christ, the comfort of the Holy Spirit, and the strength of a loving Christian family. May God richly bless you and your loved ones as we journey together in faith.']",
-      photoUrl: "/images/papa 1.png",
+      photoUrl: "/images/papa 1.webp",
       isPlaceholderMessage: true,
     }
   },
@@ -417,7 +417,7 @@ export const churchData: ChurchConfig = {
     },
     {
       id: "gal-4",
-      url: "/images/choir.jpeg",
+      url: "/images/choir.webp",
       title: "Sacred Choral Harmonies",
       caption: "The choir lifting voices in sacred anthems and traditional hymns.",
       alt: "Church choir singing during Sunday service"

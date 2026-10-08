@@ -35,6 +35,8 @@ export const Footer: React.FC<FooterProps> = ({
   src="/images/mecsa-logo.png"
   alt="MECSA Church Logo"
   className="w-8 h-8 object-contain"
+  loading="lazy"
+  decoding="async"
 />
               <div>
                 <span className="font-cinzel text-lg font-bold tracking-wider text-white">

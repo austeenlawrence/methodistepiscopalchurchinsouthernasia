@@ -94,20 +94,24 @@ export default function App() {
       />
 
       {/* Global Plan Your Visit Modal */}
-      <PlanYourVisitModal
-        isOpen={isPlanVisitOpen}
-        onClose={() => setIsPlanVisitOpen(false)}
-        onContactClick={() => {
-          setIsPlanVisitOpen(false);
-          navigateTo('contact');
-        }}
-      />
+      {isPlanVisitOpen && (
+        <PlanYourVisitModal
+          isOpen={isPlanVisitOpen}
+          onClose={() => setIsPlanVisitOpen(false)}
+          onContactClick={() => {
+            setIsPlanVisitOpen(false);
+            navigateTo('contact');
+          }}
+        />
+      )}
 
       {/* Global Privacy Policy Modal */}
-      <PrivacyPolicyModal
-        isOpen={isPrivacyPolicyOpen}
-        onClose={() => setIsPrivacyPolicyOpen(false)}
-      />
+      {isPrivacyPolicyOpen && (
+        <PrivacyPolicyModal
+          isOpen={isPrivacyPolicyOpen}
+          onClose={() => setIsPrivacyPolicyOpen(false)}
+        />
+      )}
     </div>
   );
 }
