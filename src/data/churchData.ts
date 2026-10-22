@@ -43,7 +43,7 @@ export const churchData: ChurchConfig = {
       id: "sunday-worship",
       name: "Sunday Worship Service",
       day: "Every Sunday",
-      time: "09:00 AM – 11:00 AM",
+      time: "10:00 AM – 12:00 PM",
       description: "Our primary congregation gathering featuring reverent liturgical prayer, traditional hymns, choral anthems, Scripture reading, and Gospel proclamation.",
       isPlaceholderTime: true,
     },

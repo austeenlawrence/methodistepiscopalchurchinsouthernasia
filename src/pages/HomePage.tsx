@@ -176,7 +176,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           {/* Quick Sunday Indicator */}
           <div className="pt-6 flex items-center justify-center gap-2 text-xs sm:text-sm text-gray-300">
             <Clock className="w-4 h-4 text-[#E8C860]" />
-            <span>Sunday Worship Gathering: <strong>{sundayService?.time || '09:00 AM'}</strong> at Church Sanctuary, {churchData.location.city}</span>
+            <span>Sunday Worship Gathering: <strong>{sundayService?.time || '10:00 AM'}</strong> at Church Sanctuary, {churchData.location.city}</span>
           </div>
         </div>
       </section>

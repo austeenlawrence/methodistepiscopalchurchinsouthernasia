@@ -44,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </span>
             <span className="flex items-center gap-1.5 text-gray-300">
               <Clock className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span>Sunday Worship: {sundayService?.time || '09:30 AM'}</span>
+              <span>Sunday Worship: {sundayService?.time || '10:00 AM'}</span>
             </span>
           </div>
           <div className="flex items-center gap-4">
