@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PageRoute, ChurchEvent } from '../types';
 import { churchData } from '../data/churchData';
 import { EventModal } from '../components/EventModal';
+import { getSafeImageUrl } from '../utils/imageUtils';
 import { Calendar, Clock, MapPin, ExternalLink, ChevronRight, Info } from 'lucide-react';
 
 interface EventsPageProps {
@@ -63,12 +64,20 @@ export const EventsPage: React.FC<EventsPageProps> = () => {
                 <div>
                   <div className="relative h-48 sm:h-52 overflow-hidden bg-[#0F1D2F] flex items-center justify-center">
                     <img
-                      src={event.image}
+                      src={getSafeImageUrl(event.image)}
                       alt={event.imageAlt}
                       className="w-full h-full object-contain"
                       referrerPolicy="no-referrer"
                       loading="lazy"
                       decoding="async"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (!target.dataset.fallbackTried) {
+                          target.dataset.fallbackTried = 'true';
+                          console.warn(`[Event Image] Failed to load ${event.image}, falling back to placeholder`);
+                          target.src = '/images/about church.jpeg';
+                        }
+                      }}
                     />
                     <div className="absolute top-3 left-3 bg-[#0F1D2F]/90 text-[#E8C860] text-xs font-bold px-3 py-1 rounded backdrop-blur-xs border border-[#C59B27]/40 font-cinzel">
                       {event.date.split(',')[0]}

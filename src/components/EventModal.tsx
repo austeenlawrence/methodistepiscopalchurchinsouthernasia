@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ChurchEvent } from '../types';
 import { churchData } from '../data/churchData';
+import { getSafeImageUrl } from '../utils/imageUtils';
 import { X, Calendar, Clock, MapPin, ExternalLink, Info } from 'lucide-react';
 
 interface EventModalProps {
@@ -38,10 +39,18 @@ export const EventModal: React.FC<EventModalProps> = ({ event, isOpen, onClose }
         {/* Header with image */}
         <div className="relative h-52 sm:h-64 w-full bg-[#0F1D2F]">
           <img
-            src={event.image}
+            src={getSafeImageUrl(event.image)}
             alt={event.imageAlt}
             className="w-full h-full object-cover opacity-75"
             referrerPolicy="no-referrer"
+            onError={(e) => {
+              const target = e.currentTarget;
+              if (!target.dataset.fallbackTried) {
+                target.dataset.fallbackTried = 'true';
+                console.warn(`[Event Modal Image] Failed to load ${event.image}, falling back to placeholder`);
+                target.src = '/images/about church.jpeg';
+              }
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0F1D2F] via-[#0F1D2F]/40 to-transparent"></div>
           

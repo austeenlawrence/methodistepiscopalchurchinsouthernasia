@@ -4,6 +4,7 @@ import { churchData } from '../data/churchData';
 import { Lightbox } from '../components/Lightbox';
 import { EventModal } from '../components/EventModal';
 import { SermonModal } from '../components/SermonModal';
+import { getSafeImageUrl } from '../utils/imageUtils';
 import {
   Calendar,
   Clock,
@@ -418,12 +419,20 @@ export const HomePage: React.FC<HomePageProps> = ({
                   <div className="relative h-48 overflow-hidden bg-[#0F1D2F] flex items-center justify-center">
                     {eventsVisible ? (
                       <img
-                        src={event.image}
+                        src={getSafeImageUrl(event.image)}
                         alt={event.imageAlt}
                         className="w-full h-full object-contain"
                         referrerPolicy="no-referrer"
                         loading="lazy"
                         decoding="async"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          if (!target.dataset.fallbackTried) {
+                            target.dataset.fallbackTried = 'true';
+                            console.warn(`[Event Image] Failed to load ${event.image}, falling back to placeholder`);
+                            target.src = '/images/about church.jpeg';
+                          }
+                        }}
                       />
                     ) : (
                       <div className="w-full h-full bg-[#0F1D2F]" />
